@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+<configuration>
+	<!-- 
+		默认的块副本数。可以在创建文件时指定副本的实际数量。如果在创建时未指定副本数，则使用默认值 
+		tip:如果集群中有3个datanode，但是副本设置为4，那么具体的副本数是3，因为一个datanode中保存
+		两份副本没有任何意义，只有当你在集群中再次添加一台datanode的时候才会本分4份。
+	-->
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+    </property>
+    
+    
+    <!--新文件的默认块最小大小，以字节为单位。您可以使用以下后缀(不区分大小写):
+		(k,m,g,t,p,e,指定尺寸(如128k, 512m, 1g等)，或提供完整的字节大小(如134217728表示128 MB)。 
+	
+    <property>
+        <name>dfs.blocksize</name>
+        <value>51200</value>
+    </property>
+    -->
+    
+    <!-- dfs的namenode的webUI监听的ip和端口 -->
+    <property>
+        <name>dfs.namenode.http-address</name>
+        <value>0.0.0.0:50070</value>
+    </property>
+	
+	<!-- The secondary namenode的ip地址和端口 -->
+    <property>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>0.0.0.0:50090</value>
+	</property>
+	
+	<!--
+    	确定DFS的namenode应该在本地文件系统的何处存储名称表(fsimage)
+    	如果这是一个以逗号分隔的目录列表，那么名称表将复制到所有目录中，以实现冗余。
+     -->
+	<property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///usr/local/hadoop/hdpdata/dfs/name</value>
+    </property>
+    
+    <!--
+      确定DFS的datanode应该将其块存储在本地文件系统的什么位置
+      如果这是一个以逗号分隔的目录列表，那么数据将存储在所有命名的目录中，通常存储在不同的设备上。
+      对于HDFS存储策略，应该用相应的存储类型([SSD]/[DISK]/[ARCHIVE]/[RAM_DISK])标记目录。
+      如果目录没有显式标记存储类型，则默认存储类型为磁盘。如果本地文件系统权限允许，将创建不存在的目录。
+     -->
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:///usr/local/hadoop/hdpdata/dfs/data</value>
+    </property>
+
+	<!--
+    	确定DFS的secondary namenode应该在本地文件系统的何处存储要合并的临时映像
+    	如果这是一个以逗号分隔的目录列表，那么映像将复制到所有目录中以实现冗余。
+     -->
+    <property>
+        <name>dfs.namenode.checkpoint.dir</name>
+        <value>file:///usr/local/hadoop/hdpdata/dfs/cname</value>
+    </property>
+    
+    <!-- 
+    	确定DFS的secondary namenode应该在本地文件系统的何处存储要合并的临时edit文件
+    	如果这是一个以逗号分隔的目录列表，那么编辑将复制到所有目录中以实现冗余。
+    	默认值与dfs.namenode.checkpoint.dir相同
+     -->
+    <property>
+        <name>dfs.namenode.checkpoint.edits.dir</name>
+        <value>file:///usr/local/hadoop/hdpdata/dfs/cname</value>
+    </property>
+    
+    <!-- 
+    	开启在网页中使用hdfs
+     -->
+    <property>
+        <name>dfs.webhdfs.enabled</name>
+        <value>true</value>
+    </property>
+
+</configuration>
